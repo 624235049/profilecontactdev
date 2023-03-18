@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profiledevtest/feature/home/cubit/profile_cubit.dart';
+import 'package:profiledevtest/utils/dimension.dart';
 
 import '../../../../utils/app_theme.dart';
 import 'detail_contact_page.dart';
@@ -21,7 +22,9 @@ class _HomeContactPagrState extends State<HomeContactPage> {
           return const Scaffold(
             body: Center(
               child: Text(
-                  "An error occurred, the profilee page could not be displayed."),
+                "An error occurred, the profile page could not be displayed.",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           );
         }
@@ -36,17 +39,18 @@ class _HomeContactPagrState extends State<HomeContactPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Text("please wait..."),
+                  Text("please wait..." ,style: TextStyle(fontWeight: FontWeight.bold),),
                 ],
               ),
             ),
           );
         }
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: AppTheme.mainAppColor,
             title: const Center(
-              child: Text("รายชื่อผู้ติดต่อ"),
+              child: Text("รายชื่อผู้ติดต่อ" ,style: TextStyle(fontWeight: FontWeight.bold),),
             ),
           ),
           body: Column(
@@ -57,31 +61,42 @@ class _HomeContactPagrState extends State<HomeContactPage> {
                     itemCount: profileState.users.length,
                     itemBuilder: (context, index) {
                       final profile = profileState.users[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                            backgroundImage: NetworkImage(profile.picture)),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('${profile.firstName} ${profile.lastName}'),
-                          ],
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(' ${profile.email} '),
-                            Text(' ${profile.phone} '),
-                          ],
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DetailContactPage(
-                                      userEntity: profile,
-                                    )),
-                          );
-                        },
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(profile.picture),
+                              radius: Dimensions.radius(context, 25),
+                            ),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${profile.firstName} ${profile.lastName}',
+                                  style: AppTheme.h1Style,
+                                ),
+                              ],
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(' ${profile.email} '),
+                                Text(' ${profile.phone} '),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailContactPage(
+                                    userEntity: profile,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: Dimensions.height10(context)),
+                        ],
                       );
                     },
                   ),

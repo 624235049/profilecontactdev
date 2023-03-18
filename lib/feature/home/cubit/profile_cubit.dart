@@ -21,7 +21,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       });
 
     } on SocketException catch (_) {
-
       emit(ProfileFailure());
     } catch (_) {
 
